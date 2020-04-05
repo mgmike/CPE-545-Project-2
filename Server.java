@@ -4,23 +4,16 @@ import java.net.*;
 import java.util.*;
 
 public class Server extends java.rmi.server.UnicastRemoteObject implements QueryInterface{
-    ArrayList<String> classRoster = new ArrayList<>(Arrays.asList("Matthew Aquiles", "Yingsheng Bao",
-								"AravindBaskaran", "Rudresh Bhatt", "Amit Bhorania", "Bryan Charalambous",
-								"Akanksha Chatra", "Zhiyuan Chen", "Yingsheng Cui", "Constantine Davantzis",
-                                                                "Shivani Devoor", "Prerakkumar Doshi", "Elaina Ferrer", "Aakanksha Gokhe",
-								"Dillon Guarino", "Poonam Gupta", "Yabin Han", "Yang Li", "Nito Lugo",
-                                                                "Brian Madden", "Madjid Mousavi", "Sneha Nagmoti", "Kashmira Pardeshi",
-                                                                "Chintan Patelæ", "Michael Sasso", "Milin Shah", "Alan Steinberg", "Tanvir Talukder",
-								"Lei Tang", "Nathalie Tran", "Lei Yan", "Jingwei Zhang"));
-
     String addr;
     Registry registry;
+    ArrayList<String> workoutList = new ArrayList<>(Arrays.asList("Bench Press Chest", "Squat Legs"));
 
+    @Override
     public String queryWorkout(String x) throws RemoteException{
 	ArrayList<String> lastNamesFound = new ArrayList<String>();
-	for (int i = 0; i<classRoster.size(); i++){
-            if(x.equals(classRoster.get(i).split("\\s+")[0])){
-		lastNamesFound.add(classRoster.get(i).split("\\s+")[1]);
+	for (int i = 0; i<workoutList.size(); i++){
+            if(x.equals(workoutList.get(i).split("\\s+")[0])){
+		lastNamesFound.add(workoutList.get(i).split("\\s+")[1]);
             }
 	}
 
