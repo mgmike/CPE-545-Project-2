@@ -16,7 +16,7 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
     String addr;
     Registry registry;
 
-    public String queryClassRoster(String x) throws RemoteException{
+    public String queryWorkout(String x) throws RemoteException{
 	ArrayList<String> lastNamesFound = new ArrayList<String>();
 	for (int i = 0; i<classRoster.size(); i++){
             if(x.equals(classRoster.get(i).split("\\s+")[0])){

@@ -1,5 +1,5 @@
 import java.rmi.*;
 
 public interface QueryInterface extends Remote {
-    public String queryClassRoster(String x) throws RemoteException;
+    public String queryWorkout(String x) throws RemoteException;
 }

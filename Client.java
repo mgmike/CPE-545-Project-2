@@ -7,15 +7,14 @@ public class Client {
 	Registry registry;
 	String serverAddr = args[0];
 	String serverPort = args[1];
-	String text = args[2];
-
-	System.out.println("sending " + text + " to " + serverAddr + ":" + serverPort);
+	String wrkoutName = args[2];
+        
+	System.out.println("Sending " + wrkoutName + " to " + serverAddr + ":" + serverPort);
 
 	try{
-            registry = LocateRegistry.getRegistry(serverAddr,(new Integer(serverPort)).intValue());
+            registry = LocateRegistry.getRegistry(serverAddr, (new Integer(serverPort)));
             Server = (QueryInterface) (registry.lookup("Server"));
-            //call the remote method
-            System.out.println( Server.queryClassRoster(text) );
+            System.out.println(Server.queryWorkout(wrkoutName));
 	} catch(RemoteException e){
             e.printStackTrace();
 	} catch(NotBoundException e){
