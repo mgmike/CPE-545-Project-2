@@ -6,38 +6,43 @@ import java.util.*;
 public class Server extends java.rmi.server.UnicastRemoteObject implements QueryInterface{
     String addr;
     Registry registry;
-    ArrayList<String> workoutList = new ArrayList<>(Arrays.asList("Bench Press Chest", "Squat Legs"));
+    ArrayList<String> workoutList = new ArrayList<>(Arrays.asList("Bench Press Chest", "Squat Legs", "Arnold Press Shoulders", 
+                                                                "Push Press Shoulders", "Overhead Press Shoulders", 
+                                                                "Military Press Shoulders", "Upright Row Shoulders", 
+                                                                "Pull-ups Back", "Dips Triceps", "Lateral Pull-down Back", 
+                                                                "Seated Row Back", "Dumbbell Row Back", "Row Back", "Curls Bicep", 
+                                                                "Barbell Row Back", "Preacher Curls Biceps", 
+                                                                "Incline Bench Curls Biceps", "Incline Bench Press Chest", 
+                                                                "Decline Bench Press Chest", "Flies Chest", "Skull-crusher Triceps", 
+                                                                "Close-grip Bench Triceps", "Overhead Extension Triceps"));
 
     @Override
     public String queryWorkout(String x) throws RemoteException{
-	ArrayList<String> lastNamesFound = new ArrayList<String>();
-	for (int i = 0; i<workoutList.size(); i++){
-            if(x.equals(workoutList.get(i).split("\\s+")[0])){
-		lastNamesFound.add(workoutList.get(i).split("\\s+")[1]);
+	ArrayList<String> workoutFound = new ArrayList<String>();
+	for (int i = 0; i < workoutList.size(); i++) {
+            if (x.equals(workoutList.get(i).split("\\s+")[0])){
+		workoutFound.add(workoutList.get(i).split("\\s+")[1]);
             }
 	}
-
-	if(lastNamesFound.size() < 1){
-            return "this name is not in the class roster";
-	} else{
-            return Arrays.toString(lastNamesFound.toArray());
-	}
+	if (workoutFound.size() < 1)
+            return "This exercise is not in the list of known workouts!";
+	else
+            return Arrays.toString(workoutFound.toArray());
     }
 
     public Server() throws RemoteException{
 	try{
             addr = (InetAddress.getLocalHost()).toString();
 	} catch(Exception e){
-            System.out.println("cant get inet address");
+            System.out.println("Cant get inet address!");
         }
 	int port = 3232;
-	System.out.println("this address= " + addr + ", port= " + port);
-
+	System.out.println("This address: " + addr + ", port: " + port);
 	try{
             registry = LocateRegistry.createRegistry(port);
             registry.rebind("Server", this);
 	} catch(RemoteException e){
-            System.out.println("remote exception " + e);
+            System.out.println("Remote exception: " + e);
 	}
     }
 
