@@ -9,7 +9,7 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
     private static ArrayList<Workout> workoutList = new ArrayList<Workout>();
 
     @Override
-    public String queryWorkout(String muscleGroup) throws RemoteException{
+    public ArrayList<Workout> queryWorkout(String muscleGroup) throws RemoteException{
         ArrayList<Workout> muscleGroupFound = new ArrayList<Workout>();
         for (int i = 0; i<workoutList.size(); i++){
             if(workoutList.get(i).getMuscleGroup().equals(muscleGroup)){
@@ -17,11 +17,11 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
             }
         }
 
+        System.out.println("Message recieved");
         if(muscleGroupFound.size() < 1){
-                System.out.println("Message recieved");
-                return "This name is not in the class roster";
+                return null;
         } else{
-                return Arrays.toString(muscleGroupFound.toArray());
+                return muscleGroupFound;
         }
     }
 
@@ -71,31 +71,4 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
                 System.exit(1);
         }
     }
-}
-
-class Workout{
-    private String name;
-    private String muscleGroup;
-
-    public Workout(String n, String mg){
-        name = n;
-        muscleGroup = mg;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setMuscleGroup(String muscleGroup) {
-        this.muscleGroup = muscleGroup;
-    }
-
-    public String getMuscleGroup() {
-        return muscleGroup;
-    }
-
-    public String getName(){
-        return name;
-    }
-
 }
