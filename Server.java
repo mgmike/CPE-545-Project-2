@@ -4,7 +4,7 @@ import java.net.*;
 import java.util.*;
 
 public class Server extends java.rmi.server.UnicastRemoteObject implements QueryInterface{
-    private String addr;
+    private static String addr = "";
     private Registry registry;
     private static ArrayList<Workout> workoutList = new ArrayList<Workout>();
 
@@ -21,13 +21,16 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
         if(muscleGroupFound.size() < 1){
                 return null;
         } else{
+            System.out.println("Returning stuff");
                 return muscleGroupFound;
         }
     }
 
     public Server() throws RemoteException{
         try{
+            if(addr.equals("")) {
                 addr = (InetAddress.getLocalHost()).toString();
+            }
         } catch(Exception e){
                 System.out.println("cant get inet address");
             }
@@ -63,6 +66,9 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
 
     public static void main(String args[]){
         populateWorkoutList();
+        if(args.length > 1){
+            addr = args[0];
+        }
         try{
                 Server server = new Server();
 
