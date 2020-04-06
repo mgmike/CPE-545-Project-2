@@ -66,7 +66,7 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
 
     public static void main(String args[]){
         populateWorkoutList();
-        if(args.length > 1){
+        if(args.length > 0){
             addr = args[0];
         }
         try{
