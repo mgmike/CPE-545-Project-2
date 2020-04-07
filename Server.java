@@ -9,11 +9,11 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
     private static ArrayList<Workout> workoutList = new ArrayList<Workout>();
 
     @Override
-    public String queryWorkout(String muscleGroup) throws RemoteException{
-        ArrayList<String> muscleGroupFound = new ArrayList<String>();
+    public ArrayList<Workout> queryWorkout(String muscleGroup) throws RemoteException{
+        ArrayList<Workout> muscleGroupFound = new ArrayList<Workout>();
         for (int i = 0; i<workoutList.size(); i++){
             if(workoutList.get(i).getMuscleGroup().equals(muscleGroup)){
-                muscleGroupFound.add(workoutList.get(i).getName());
+                muscleGroupFound.add(workoutList.get(i));
             }
         }
 
@@ -22,7 +22,7 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
                 return null;
         } else {
             System.out.println("Returning stuff");
-                return Arrays.toString(muscleGroupFound.toArray());
+                return muscleGroupFound;
         }
     }
 
