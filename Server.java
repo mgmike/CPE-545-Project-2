@@ -9,20 +9,20 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
     private static ArrayList<Workout> workoutList = new ArrayList<Workout>();
 
     @Override
-    public ArrayList<Workout> queryWorkout(String muscleGroup) throws RemoteException{
-        ArrayList<Workout> muscleGroupFound = new ArrayList<Workout>();
+    public String queryWorkout(String muscleGroup) throws RemoteException{
+        ArrayList<String> muscleGroupFound = new ArrayList<String>();
         for (int i = 0; i<workoutList.size(); i++){
             if(workoutList.get(i).getMuscleGroup().equals(muscleGroup)){
-                muscleGroupFound.add(workoutList.get(i));
+                muscleGroupFound.add(workoutList.get(i).getName());
             }
         }
 
         System.out.println("Message recieved");
         if(muscleGroupFound.size() < 1){
                 return null;
-        } else{
+        } else {
             System.out.println("Returning stuff");
-                return muscleGroupFound;
+                return Arrays.toString(muscleGroupFound.toArray());
         }
     }
 
@@ -30,6 +30,7 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
         try{
             if(addr.equals("")) {
                 addr = (InetAddress.getLocalHost()).toString();
+                //addr = "192.168.1.133";
             }
         } catch(Exception e){
                 System.out.println("cant get inet address");
