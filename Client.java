@@ -25,11 +25,7 @@ public class Client {
 			//} else {
 			//	System.out.println("There are no exercises that work out that muscle group.");
 			//}
-			if (workoutName == null) {
-				System.out.println(Server.queryWorkout(workoutName));
-			} else {
-				System.out.println("No workouts match this muscle group.");
-			}
+			System.out.println(Server.queryWorkout(workoutName));
 		} catch(RemoteException e){
 			e.printStackTrace();
 		} catch(NotBoundException e){
