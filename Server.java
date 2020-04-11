@@ -16,13 +16,13 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
                 muscleGroupFound.add(workoutList.get(i).getName());
             }
         }
-
         System.out.println("Message recieved");
         if(muscleGroupFound.size() < 1){
                 return null;
         } else {
-            System.out.println("Returning stuff");
-                return Arrays.toString(muscleGroupFound.toArray());
+            String output = Arrays.toString(muscleGroupFound.toArray());
+            System.out.println(output);
+            return output;
         }
     }
 
@@ -30,7 +30,6 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
         try{
             if(addr.equals("")) {
                 addr = (InetAddress.getLocalHost()).toString();
-                //addr = "192.168.1.133";
             }
         } catch(Exception e){
                 System.out.println("cant get inet address");
