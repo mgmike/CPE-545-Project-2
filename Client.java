@@ -1,25 +1,24 @@
 import java.rmi.*;
 import java.rmi.registry.*;
-import java.util.ArrayList;
 
 public class Client {
     public static void main(String args[]){
-		QueryInterface Server;
-		Registry registry;
-		String serverAddr = args[0];
-		String serverPort = args[1];
-		String workoutName = args[2];
+	QueryInterface Server;
+	Registry registry;
+	String serverAddr = args[0];
+	String serverPort = args[1];
+	String wrkoutName = args[2];
 
-		System.out.println("Sending " + workoutName + " to " + serverAddr + ":" + serverPort);
+	System.out.println("Sending " + wrkoutName + " to " + serverAddr + ":" + serverPort);
 
-		try{
-			registry = LocateRegistry.getRegistry(serverAddr, (new Integer(serverPort)));
-			Server = (QueryInterface) (registry.lookup("Server"));
-			System.out.println(Server.queryWorkout(workoutName));
-		} catch(RemoteException e){
-			e.printStackTrace();
-		} catch(NotBoundException e){
-			System.err.println(e);
-		}
+	try{
+            registry = LocateRegistry.getRegistry(serverAddr, (new Integer(serverPort)));
+            Server = (QueryInterface) (registry.lookup("Server"));
+            System.out.println(Server.queryWorkout(wrkoutName));
+	} catch(RemoteException e){
+            e.printStackTrace();
+	} catch(NotBoundException e){
+            System.err.println(e);
+	}
     }
 }

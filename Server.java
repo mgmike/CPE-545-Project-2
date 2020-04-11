@@ -3,23 +3,22 @@ import java.rmi.registry.*;
 import java.net.*;
 import java.util.*;
 
-public class Server extends java.rmi.server.UnicastRemoteObject implements QueryInterface{
+public class Server extends java.rmi.server.UnicastRemoteObject implements QueryInterface {
     private static String addr = "";
     private Registry registry;
     private static ArrayList<Workout> workoutList = new ArrayList<Workout>();
 
     @Override
-    public String queryWorkout(String muscleGroup) throws RemoteException{
+    public String queryWorkout(String muscleGroup) throws RemoteException {
         ArrayList<String> muscleGroupFound = new ArrayList<String>();
-        for (int i = 0; i<workoutList.size(); i++){
-            if(workoutList.get(i).getMuscleGroup().equals(muscleGroup)){
+        for (int i = 0; i < workoutList.size(); i++)
+            if(workoutList.get(i).getMuscleGroup().equals(muscleGroup))
                 muscleGroupFound.add(workoutList.get(i).getName());
-            }
-        }
-        System.out.println("Message recieved");
-        if(muscleGroupFound.size() < 1){
-                return null;
-        } else {
+
+        System.out.println("Message Recieved!");
+        if(muscleGroupFound.size() < 1)
+            return null;
+        else {
             String output = Arrays.toString(muscleGroupFound.toArray());
             System.out.println(output);
             return output;
@@ -28,20 +27,18 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
 
     public Server() throws RemoteException{
         try{
-            if(addr.equals("")) {
+            if(addr.equals(""))
                 addr = (InetAddress.getLocalHost()).toString();
-            }
         } catch(Exception e){
-                System.out.println("cant get inet address");
-            }
+            System.out.println("Can't get inet address!");
+        }
         int port = 3232;
-        System.out.println("this address= " + addr + ", port= " + port);
-
+        System.out.println("This Address: " + addr + ", Port: " + port);
         try{
-                registry = LocateRegistry.createRegistry(port);
-                registry.rebind("Server", this);
+            registry = LocateRegistry.createRegistry(port);
+            registry.rebind("Server", this);
         } catch(RemoteException e){
-                System.out.println("remote exception " + e);
+            System.out.println("Remote Exception: " + e);
         }
     }
 
@@ -64,17 +61,15 @@ public class Server extends java.rmi.server.UnicastRemoteObject implements Query
         workoutList.add(new Workout("Close-grip Bench", "Triceps"));
     }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         populateWorkoutList();
-        if(args.length > 0){
+        if(args.length > 0)
             addr = args[0];
-        }
-        try{
-                Server server = new Server();
-
+        try {
+            Server server = new Server();
         } catch (Exception e){
-                e.printStackTrace();
-                System.exit(1);
+            e.printStackTrace();
+            System.exit(1);
         }
     }
 }
